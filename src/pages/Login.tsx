@@ -11,7 +11,7 @@ const Login = () => {
       onSubmit={async ({ email, password }) => {
         await signInWithEmailAndPassword(auth, email, password);
       }}
-    >
+    >                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
       {/* page navigation */}
       <Link to={"/signup"} style={{ alignSelf: "center" }}>
         <MUILink>Signup</MUILink>
