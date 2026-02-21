@@ -5,28 +5,28 @@ import { auth } from "../firebase";
 
 interface AuthState {
   user: User | null;
-  loading: boolean;
+  authLoading: boolean;
 }
 
 export const AuthContext = createContext<AuthState>({
   user: null,
-  loading: false,
+  authLoading: false,
 });
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [authLoading, setAuthLoading] = useState(true);
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (u) => {
       setUser(u);
-      setLoading(false);
+      setAuthLoading(false);
     });
     return () => unsub();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading }}>
+    <AuthContext.Provider value={{ user, authLoading }}>
       {children}
     </AuthContext.Provider>
   );
