@@ -7,12 +7,13 @@ import {
   limit,
   query,
   serverTimestamp,
+  Timestamp,
   where,
 } from "firebase/firestore";
 import { db } from "../firebase";
 
 type WishlistItem = {
-  createdAt: string;
+  createdAt: Timestamp;
   id: string;
   listId: string;
   name: string;
@@ -85,6 +86,7 @@ export const getWishlistItems = async (listId: string) => {
     const data = doc.data() as Omit<WishlistItem, "id">;
     return {
       ...data,
+      createdAt: doc.data().createdAt?.seconds,
       id: doc.id,
     };
   });
@@ -93,15 +95,18 @@ export const getWishlistItems = async (listId: string) => {
 export const getItemById = async (
   itemId: string,
 ): Promise<WishlistItem | null> => {
-  const ref = doc(db, "wishlistItems", itemId);
-  const snap = await getDoc(ref);
+  const item = doc(db, "wishlistItems", itemId);
+  const snapshot = await getDoc(item);
 
-  if (!snap.exists()) return null;
-
-  const data = snap.data() as Omit<WishlistItem, "id">;
+  // if (snapshot.empty) {
+  //   return [];
+  // }
+  console.log("snapshot", snapshot.data());
+  const data = snapshot.data() as Omit<WishlistItem, "id">;
 
   return {
     ...data,
-    id: snap.id,
+    createdAt: data.createdAt,
+    id: snapshot.id,
   };
 };

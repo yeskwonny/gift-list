@@ -14,6 +14,13 @@ interface WishlistItem {
   url: string;
 }
 
+const COLORS = {
+  main: "#A78BFA",
+  accent: "#F472B6", 
+  bg: "#F5F3FF", 
+  purchased: "#94A3B8", 
+};
+
 const Items = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -44,10 +51,11 @@ const Items = () => {
           key={i.id}
           title={i.name}
           price={i.price}
-          buttonTitle="OPEN"
+          buttonTitle={
+            i.purchaseStatus === "available" ? "Available" : "Taken!"
+          }
           onOpen={() => navigate(`/gifts/list/item/${i.id}`)}
-          onShare={() => {}}
-          variant="horizontal"
+          variant="vertical"
           image="../../public/card.png"
         />
       ))}

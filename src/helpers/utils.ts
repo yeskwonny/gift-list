@@ -26,3 +26,7 @@ export const shareLink = async ({ listId, title }: Props): Promise<void> => {
     window.prompt("Copy this link:", url);
   }
 };
+export const convertTimeStamp = (seconds: number) => {
+  const date = new Date(seconds * 1000);
+  return date.toISOString();
+};

@@ -4,6 +4,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import CardActionArea from "@mui/material/CardActionArea";
 import Button from "@mui/material/Button";
+import { Chip } from "@mui/material";
 
 interface Props {
   title: string;
@@ -22,12 +23,13 @@ const WishlistCard = ({
   onShare,
   image,
   description,
-  buttonTitle = "Share",
+  buttonTitle,
+
   variant = "vertical",
   price,
 }: Props) => {
   const isHorizontal = variant === "horizontal";
-
+  console.log("props", buttonTitle);
   return (
     <Card className="">
       <CardActionArea onClick={onOpen}>
@@ -51,8 +53,8 @@ const WishlistCard = ({
         </div>
       </CardActionArea>
 
-      {onShare && (
-        <CardActions>
+      <CardActions>
+        {onShare ? (
           <Button
             size="small"
             onClick={(e) => {
@@ -62,8 +64,20 @@ const WishlistCard = ({
           >
             {buttonTitle}
           </Button>
-        </CardActions>
-      )}
+        ) : (
+          <Chip
+            label={buttonTitle}
+            size="small"
+            style={{
+              padding: "3px 1px",
+              backgroundColor: `${buttonTitle === "Available" ? "#A78BFA" : "#F472B6"}`,
+              color: "white",
+              fontWeight: "bold",
+              fontSize: "12px",
+            }}
+          />
+        )}
+      </CardActions>
     </Card>
   );
 };
